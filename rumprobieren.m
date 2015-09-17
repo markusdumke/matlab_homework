@@ -20,27 +20,33 @@ end
 
 y = max(y)
 %%
-x = [0 0 0 0]
+x = [0 0 1 2 3]
+
 [val, ind] = sort(x)
+if length(unique(x)) == length(x) 
+
 test = ind == 1:length(x)
 tf = min(test)
 
+else
+   tf = 0 
+end
+
+
+
 %%
-x = [5 10 -3 10 -3 11 -3 5 5 7]
+x = [5 0 -3 0 -3 11 -3 5 5 0]
+x = [0 0 ];
 
 numbersinx = unique(x)
 y = zeros(1,length(numbersinx))
-z = zeros(1,length(numbersinx))
 
 for ii=1:length(numbersinx)
     y(ii) = sum(x == numbersinx(ii))
-    
-    if y(ii)==3
-       z(ii) = numbersinx(ii)
-    end
 end
 
-y = z(z~=0)
+numbersinx(y==3)
+ 
 
 
 
