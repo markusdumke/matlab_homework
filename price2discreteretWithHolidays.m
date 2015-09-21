@@ -20,7 +20,7 @@ rets(missingValues(2:end, :)) = NaN;
 
 % return log returns as table
 retsTable = prices(2:end, :);
-retsTable{:, :} = rets;
+retsTable{:, :} = 100*rets;
 
 end
 
