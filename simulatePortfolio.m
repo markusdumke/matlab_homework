@@ -4,7 +4,7 @@ function [ portfolio_meanstd ] = simulatePortfolio( returns, nsim )
 %   returns   table of stock returns
 %
 % Output:
-%   portfolio_meanstd    nsimx2 table of  
+%   portfolio_meanstd    nsimx2 table of estimated portfolio mean and std
 %
 
 nstocks = size(returns(:,:),2);
@@ -18,7 +18,7 @@ portfolio_var= zeros(nsim,1);
 
 for ii=1:nsim
 multiplied_weights = transpose(weights(ii,:))*weights(ii,:);
-Z = multiplied_weights .* tril(Cov,0);
+Z = multiplied_weights .* Cov;
 portfolio_var(ii) = sum(sum(Z,2));
 end
 

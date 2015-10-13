@@ -26,9 +26,10 @@ corr_vec = getCorrelationTableAsVector(dax_corr);
 
 nbins = 20;
 hist(corr_vec, nbins)          %histogram of correlations
+title('Histogram of Correlations')
 
 %% display ticker Symbols of maximal correlated assets
-max_corr_tickSymbs = getTickSymbsofMaxCorrelatedStocks(dax_corr);
+max_corr_tickSymbs = getTickSymbsofMaxCorrelatedStocks(dax_corr)
 
 %% Plotting
 mean_vec = dax_meanstd{:,1};

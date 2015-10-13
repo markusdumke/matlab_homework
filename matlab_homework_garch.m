@@ -14,7 +14,7 @@ dbk_logrets = 100*dbk_ret_table{:,:};
 %% estimate Garch parameters
 dbk_garch = estimate(garch(1,1),dbk_logrets);
 
-%get conditional variances
+% get conditional variances
 sigmas = infer(dbk_garch,dbk_logrets);
 
 %%
@@ -53,8 +53,8 @@ plot(Dates, vars(:,1), '-k')
 % calculate exceedance frequency
 frequ = sum(exceeds)/numel(dbk_logrets);
 
-title(['Exceedance frequency: ' num2str(frequ, 3)...
-    ' instead of ' num2str(quantile, 3)])
+title(['Exceedance frequency: ' num2str(frequ, 1)...
+    ' instead of ' num2str(quantile, 1)])
 
 
 %%
@@ -79,6 +79,8 @@ subplot(2,1,2)
 autocorr(dbk_logrets.^2)
 title('empirical ACF')
 
+% ACF of simulated data is larger
+
 %%
 nsim = length(dbk_logrets);
 [Vw,Yw] = simulate(dbk_garch, nsim, 'NumPaths', 3);
@@ -90,17 +92,14 @@ datetick 'x'
 h(2) = subplot(4,1,2)
 plot(Dates,Yw(:,1))     %add plots for simulated paths
 datetick 'x'
-%ylim([-50,50])
 
 h(3) = subplot(4,1,3)
 plot(Dates,Yw(:,2))
 datetick 'x'
-%ylim([-50,50])
 
 h(4) = subplot(4,1,4)
 plot(Dates,Yw(:,3))
 datetick 'x'
-%ylim([-50,50])
 
 linkaxes(h)
 ylim([-30 30])
@@ -155,7 +154,9 @@ plot(xj,g, '-black')
 % Which model does best replicate the 
 %         leptokurtosis of the real world data sample?
 
-% The GARCH models fit best.
+% The GARCH models fit better than Normal distribution
+% GARCH with t dirstributed errors a bit better than normal distributed
+% errors
 
 
 
