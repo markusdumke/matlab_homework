@@ -9,11 +9,9 @@ function [ weights ] = simulateWeights( nstocks, nsim )
 
 weights = rand(nsim,nstocks);   %simulate random numbers
 
-%rescale portfolio weights so they add up to 1
-for ii=1:nsim
-    rescale_factor = 1/sum(weights(ii,:));
-    weights(ii,:) = weights(ii,:)*rescale_factor;   
-end
+rescale_factor = sum(weights, 2);     % sum up weights
+rescale_factor = rescale_factor(:,ones(nstocks,1));  % Make size-compatible matrix
+weights = weights./rescale_factor;    % Normalize so sum of weights = 1
 
 end
 
