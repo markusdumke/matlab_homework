@@ -79,7 +79,7 @@ subplot(2,1,2)
 autocorr(dbk_logrets.^2)
 title('empirical ACF')
 
-% ACF of simulated data is larger
+% ACF of simulated data is a bit larger
 
 %%
 nsim = length(dbk_logrets);
@@ -101,11 +101,14 @@ h(4) = subplot(4,1,4)
 plot(Dates,Yw(:,3))
 datetick 'x'
 
-linkaxes(h)
-ylim([-30 30])
+linkaxes([h(1),h(2),h(3), h(4)], 'y')
+
+%Yes, because the real historic path has a large volatility
+%around 2009, the simulated paths at different time points
 
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Exercise 2
+clf
 
 %Kernel density
 ksdensity(dbk_logrets)
@@ -151,12 +154,14 @@ nsim = 40000;
 [g,xj] = ksdensity(Yt);
 plot(xj,g, '-black')
 
+legend('ksdensity','Normal', 'GARCH Normal', 'GARCH t')
+
 % Which model does best replicate the 
 %         leptokurtosis of the real world data sample?
 
-% The GARCH models fit better than Normal distribution
-% GARCH with t dirstributed errors a bit better than normal distributed
-% errors
+% The GARCH models fit better than the Normal distribution
+% GARCH with t distributed errors fits a bit better than the GARCH with 
+% normal distributed errors
 
 
 
