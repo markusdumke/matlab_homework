@@ -70,15 +70,16 @@ tickSymbs2 = {'DBK.DE', 'DPW.DE', 'TKA.DE', 'CBK.DE'};
 prices_DbkDpwTkaCbk = getPrices(dateBeg, dateEnd, tickSymbs2);
 returns_DbkDpwTkaCbk = price2discreteretWithHolidays(prices_DbkDpwTkaCbk);
 
+%%
 tic;
 portfolio_DbkDpwTkaCbk = simulatePortfolio(returns_DbkDpwTkaCbk,50000);
-time = toc %0.93 Sekunden
+time = toc %0.66 Sekunden
 
 %no asset is on average taken with lower weights than the rest
 %Proof:
 tic;
 w = simulateWeights(4,50000);
-time2 = toc %0.16 Sekunden
+time2 = toc %0.03 Sekunden
 
 mean(w) %all very close to 0.25
 
@@ -97,15 +98,20 @@ mean_dbkdbpw = dax_meanstd{{'DBK_DE', 'DPW_DE', 'TKA_DE', 'CBK_DE'},1};
 std_dbkdpw = dax_meanstd{{'DBK_DE', 'DPW_DE', 'TKA_DE', 'CBK_DE'},2};
 
 scatter(std_dbkdpw, mean_dbkdbpw, 50, 'green', 'filled')
+hold on;
 
+%%
 %Interpretation: wünschenswerte Ergebnisse sind hohe erwartete Renditen bei
 %                niedriger Streuung, also Werte links oben im Plotfenster
 
+% find optimal points:
+% for given sigma find maximal mu & for given mu find minimal sigma 
 
+ExpReturn = mean_dbkdbpw;
+ExpCovariance = cov(returns_DbkDpwTkaCbk{:,:},'omitrows');
+[PortRisk, PortReturn, PortWts] = portopt(ExpReturn, ExpCovariance, 100);
 
+plot(PortRisk, PortReturn, '-k', 'LineWidth', 3) %optimal line
 
-
-
-
-
+PortWts  %weights of optimal portfolios
 

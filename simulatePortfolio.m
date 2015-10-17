@@ -17,7 +17,7 @@ Cov = cov(returns{:,:},'omitrows');    %covariance matrix of the returns
 portfolio_var= zeros(nsim,1);
 
 for ii=1:nsim
-multiplied_weights = transpose(weights(ii,:))*weights(ii,:);
+multiplied_weights = weights(ii,:)'*weights(ii,:);
 Z = multiplied_weights .* Cov;
 portfolio_var(ii) = sum(sum(Z,2));
 end
