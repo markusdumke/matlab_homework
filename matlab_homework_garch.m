@@ -11,11 +11,15 @@ dbk_prices = getPrices(dateBeg, dateEnd, tickerSymbs);
 dbk_ret_table = price2retWithHolidays(dbk_prices);
 dbk_logrets = 100*dbk_ret_table{:,:};
 
-%% estimate Garch parameters
-dbk_garch = estimate(garch(1,1),dbk_logrets);
+%% estimate mean parameter
+% better, but not required for homework
+muHat = mean(dbk_logrets);
 
-% get conditional variances
-sigmas = infer(dbk_garch,dbk_logrets);
+%% estimate Garch parameters
+dbk_garch = estimate(garch(1,1),dbk_logrets - muHat);
+
+% get conditional standard deviations, not variances
+sigmas = sqrt(infer(dbk_garch,dbk_logrets));
 
 %%
 Dates = datenum(dbk_ret_table.Properties.RowNames);
@@ -27,12 +31,13 @@ datetick 'x'
 
 %% estimate VaR
 quantile = 0.05;
+
+% unrequired due to removal of for loop
 vars = zeros(numel(dbk_logrets),1);   % preallocate VaR vector
 
-for ii=1:numel(dbk_logrets)
-    curr_sigma = sigmas(ii); % get sigma value
-    vars(ii,:) = norminv(quantile, dbk_garch.Constant, curr_sigma);
-end
+% - no for loop required
+% - dbk_garch.Constant is constant in variance equation, not mean equation
+vars = norminv(quantile, muHat, sigmas);
 
 % get exceedances
 exceeds = (dbk_logrets <= vars(:, 1));

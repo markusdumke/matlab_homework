@@ -44,6 +44,9 @@ hold on;
 
 %% Portfolio with DKB and DPW
 tickSymbs = {'DBK.DE', 'DPW.DE'};
+
+% you already have prices and moments, no need to download and calculate
+% them again -> costs time
 prices = getPrices(dateBeg, dateEnd, tickSymbs);
 returns = price2discreteretWithHolidays(prices);
 
@@ -101,7 +104,7 @@ scatter(std_dbkdpw, mean_dbkdbpw, 50, 'green', 'filled')
 hold on;
 
 %%
-%Interpretation: wünschenswerte Ergebnisse sind hohe erwartete Renditen bei
+%Interpretation: wï¿½nschenswerte Ergebnisse sind hohe erwartete Renditen bei
 %                niedriger Streuung, also Werte links oben im Plotfenster
 
 % find optimal points:
@@ -115,3 +118,4 @@ plot(PortRisk, PortReturn, '-k', 'LineWidth', 3) %optimal line
 
 PortWts  %weights of optimal portfolios
 
+% nice!
