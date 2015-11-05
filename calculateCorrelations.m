@@ -8,7 +8,9 @@ function [ corTable ] = calculateCorrelations( rets )
 
 rets_notintable = rets{:,:};       %returns in a matrix
 
-rets_corr = corrcoef(rets_notintable,'rows','complete'); %correlation matrix
+% you should have used the maximum number of observations for pairwise
+% correlations
+rets_corr = corrcoef(rets_notintable,'rows','pairwise'); %correlation matrix
 
 corTable = array2table(rets_corr);
 corTable.Properties.VariableNames = rets.Properties.VariableNames;
